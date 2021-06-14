@@ -1,0 +1,101 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Pupil Landing Page</title>
+  <meta name="description" content="This is the landing page for Pupils of GradingSystemDB">
+
+	<style>
+	body {
+		background-color: black;
+	}
+	h1 {
+		color: white;
+		text-align: center;
+		margin: auto;
+	}
+	p {
+		color: white;
+	}
+
+/* Style the button that is used to open and close the collapsible content */
+	.collapsible {
+  		background-color: grey;
+  		color: #444;
+  		cursor: pointer;
+  		padding: 18px;
+  		width: 100%;
+  		border: none;
+  		text-align: left;
+  		outline: none;
+ 		font-size: 15px;
+	}
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+	.active, .collapsible:hover {
+  		background-color: #ccc;
+	}
+/* Style the collapsible content. Note: hidden by default */
+	.content {
+  		padding: 0 18px;
+  		display: none;
+  		overflow: hidden;
+  		background-color: grey;
+	}
+	</style>
+	
+</head>
+
+<body>
+	<h1>Welcome Pupil</h1>
+
+	<p>Performance Summary</p>
+	<button type="button" class="collapsible">Open Table containing all Subjects and your Average Grades in them</button>
+    <div class="content">
+        <table>
+			<th>subjid</th>
+			<th>subject</th>
+			<th>average grade</th>
+			{%for dict in performancedata%}
+				<tr>
+					{%for key, value in dict.items()%}
+							<td> {{value}} </td>
+					{%endfor%}
+				</tr>
+			{%endfor%}
+		</table>
+    </div>
+
+	<button onclick="fetchSubject()" type = "button" name = "fetchResults">Fetch all results for specific test and edit grades for this test</button>
+	<button onclick="pupilChangeOwnAttribute()" type = "button" name = "changeAttribute">Change your own User Attributes</button>
+		
+
+	<script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+        }
+		
+		function fetchSubject(){
+			window.open("http://localhost:5000/api/student/subjects/query", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function pupilChangeOwnAttribute(){
+			window.open("http://localhost:5000/api/student/attributes/change", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		</script>
+	
+</body>
+</html>

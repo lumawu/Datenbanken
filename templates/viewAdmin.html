@@ -1,0 +1,205 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Admin Landing Page</title>
+  <meta name="description" content="This is the landing page for Admins of GradingSystemDB">
+
+	<style>
+	body {
+		background-color: black;
+	}
+	h1 {
+		color: white;
+		text-align: center;
+		margin: auto;
+	}
+	p {
+		color: white;
+	}
+
+/* Style the button that is used to open and close the collapsible content */
+	.collapsible {
+  		background-color: grey;
+  		color: #444;
+  		cursor: pointer;
+  		padding: 18px;
+  		width: 100%;
+  		border: none;
+  		text-align: left;
+  		outline: none;
+ 		font-size: 15px;
+	}
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+	.active, .collapsible:hover {
+  		background-color: #ccc;
+	}
+/* Style the collapsible content. Note: hidden by default */
+	.content {
+  		padding: 0 18px;
+  		display: none;
+  		overflow: hidden;
+  		background-color: grey;
+	}
+	</style>
+	
+</head>
+
+<body>
+	<h1>Welcome Admin</h1>
+
+	<p>User Management</p>
+	<button type="button" class="collapsible">Open User Table</button>
+    <div class="content">
+        <table>
+			<th>uid</th>
+			<th>forename</th>
+			<th>surname</th>
+			<th>role</th>
+			<th>username</th>
+			{%for dict in userdata%}
+				<tr>
+					{%for key, value in dict.items()%}
+							<td> {{value}} </td>
+					{%endfor%}
+				</tr>
+			{%endfor%}
+		</table>
+    </div>
+	<p>
+		<button onclick ="addUser()" type = "button" name = "adduser">Add User</button>
+		<button onclick ="changeUser()" type = "button" name = "changeuser">Change User</button>
+		<button onclick = "removeUser()" type = "button" name = "removeuser">Remove User</button>
+	</p>
+
+	<p>Class Management</p>
+	<button type="button" class="collapsible">Open Class Table</button>
+    <div class="content">
+        <table>
+			<th>classid</th>
+			<th>classname</th>
+			{%for dict in classdata%}
+				<tr>
+					{%for key, value in dict.items()%}
+						<td> {{value}} </td>
+					{%endfor%}	
+				</tr>
+			{%endfor%}
+		</table>
+    </div>
+	<p>
+		<button onclick ="addClass()" type = "button" name = "addclass">Add Class</button>
+		<button onclick ="changeClass()" type = "button" name = "changeclass">Change Class</button>
+		<button onclick ="removeClass()" type = "button" name = "removeclass">Remove Class</button>
+	</p>
+
+	<p>Class Attendance Management</p>
+	<button type="button" class="collapsible">Open Class Attendance Table</button>
+    <div class="content">
+        <table>
+			<th>classid</th>
+			<th>uid</th>
+			{%for dict in classattendancedata%}
+				<tr>
+					{%for key, value in dict.items()%}
+						<td> {{value}} </td>
+					{%endfor%}	
+				</tr>
+			{%endfor%}
+		</table>
+    </div>
+	<p>
+		<button onclick ="assignStudent()" type = "button" name = "addclassattendance">Assign Student</button>
+		<button onclick ="deassignStudent()" type = "button" name = "removeclassattendance">Deassign Student</button>
+	</p>
+
+	<p>Subject Management</p>
+	<button type="button" class="collapsible">Open Subject Table</button>
+    <div class="content">
+        <table>
+			<th>subjid</th>
+			<th>name</th>
+			<th>classid</th>
+			<th>uid</th>
+			<th>archived</th>
+			{%for dict in subjectdata%}
+				<tr>
+					{%for key, value in dict.items()%}
+						<td> {{value}} </td>
+					{%endfor%}	
+				</tr>
+			{%endfor%}
+		</table>
+    </div>
+	<p>
+		<button onclick = "addSubject()" type = "button" name = "addsubject">Add Subject</button>
+		<button onclick = "changeSubject()" type = "button" name = "changesubject">Change Subject</button>
+		<button onclick = "disposeSubject()" type = "button" name = "removesubject">Remove Subject</button>
+	</p>
+
+    <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+        }
+
+		function addUser(){
+			window.open("http://localhost:5000/api/admin/users/new", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function changeUser(){
+			window.open("http://localhost:5000/api/admin/users/change", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function removeUser(){
+			window.open("http://localhost:5000/api/admin/users/remove", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function addClass(){
+			window.open("http://localhost:5000/api/admin/classes/new", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function changeClass(){
+			window.open("http://localhost:5000/api/admin/classes/change", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function removeClass(){
+			window.open("http://localhost:5000/api/admin/classes/remove", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function assignStudent(){
+			window.open("http://localhost:5000/api/admin/classes/users/assign", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function deassignStudent(){
+			window.open("http://localhost:5000/api/admin/classes/users/deassign", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function addSubject(){
+			window.open("http://localhost:5000/api/admin/subjects/new", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function changeSubject(){
+			window.open("http://localhost:5000/api/admin/subjects/change", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+		function disposeSubject(){
+			window.open("http://localhost:5000/api/admin/subjects/dispose", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
+
+    </script>
+	
+</body>
+</html>

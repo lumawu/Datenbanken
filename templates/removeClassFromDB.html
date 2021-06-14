@@ -1,0 +1,27 @@
+<html>
+
+   <head>
+      <style>
+         body {
+            background-color: black;
+         }
+         h1 {
+            color: white;
+            text-align: center;
+            margin: auto;
+         }
+         p {
+            color: white;
+         }
+      </style>
+   </head>   
+
+
+   <body>
+      <form action = "http://localhost:5000/api/admin/classes/remove/submit" method = "post">
+         <p>Enter classid:</p>
+         <p><input type = "text" name = "classid" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>   
+   </body>
+</html>
